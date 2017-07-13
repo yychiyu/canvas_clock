@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+ <canvas id='canvas' width="500" height="500" >
+ 您的浏览器不支持canvas
+ </canvas>
+</body>
+<script src="CanvasCommand.js"></script>
+<script>
+	//画个红色方块
+	// CanvasCommand.execute([{command:'fillStyle',param:'red'},{command:'fillRect',param:[20,20,100,100]}]);
+	//画个时钟
+	//先画个表盘
+	CanvasCommand.execute([{command:"beginPath"},{command:"arc",param:[250,250,100,0,2*Math.PI]},{command:"strokeStyle",param:'#f0f'},{command:"lineWidth",param:'3'},{command:'stroke'}]);
+</script>
+</html>
