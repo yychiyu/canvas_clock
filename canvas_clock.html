@@ -1,20 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
 </head>
+
 <body>
- <canvas id='canvas' width="500" height="500" >
- 您的浏览器不支持canvas
- </canvas>
+    <canvas id='canvas' width="500" height="500">
+        您的浏览器不支持canvas
+    </canvas>
 </body>
 <script src="CanvasCommand.js"></script>
 <script>
-	//画个红色方块
-	// CanvasCommand.execute([{command:'fillStyle',param:'red'},{command:'fillRect',param:[20,20,100,100]}]);
-	//画个时钟
-	//先画个表盘
-	CanvasCommand.execute([{command:"beginPath"},{command:"arc",param:[250,250,100,0,2*Math.PI]},{command:"strokeStyle",param:'#f0f'},{command:"lineWidth",param:'3'},{command:'stroke'}]);
+//画个红色方块
+// CanvasCommand.execute([{command:'fillStyle',param:'red'},{command:'fillRect',param:[20,20,100,100]}]);
+function clock() {
+    //画个时钟
+    var date = new Date();
+    var h = date.getHours();
+    h = h + h / 60;
+    h = h > 12 ? h - 12 : h;
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+     // cxt.clearRect(0,0,500,500);
+     CanvasCommand.execute({command:"clearRect",param:[0,0,500,500]});
+    //先画个表盘
+    CanvasCommand.execute([{
+        command: "beginPath"
+    }, {
+        command: "arc",
+        param: [250, 250, 100, 0, 2 * Math.PI]
+    }, {
+        command: "strokeStyle",
+        param: '#f0f'
+    }, {
+        command: "lineWidth",
+        param: '6'
+    }, {
+        command: 'stroke'
+    }]);
+    //画时钟刻度
+    for (var i = 0; i < 12; i++) {
+        CanvasCommand.execute([{
+            command: "save"
+        }, {
+            command: "translate",
+            param: [250, 250]
+        }, {
+            command: "rotate",
+            param: [30 * i * Math.PI / 180]
+        }, {
+            command: "lineWidth",
+            param: '3'
+        }, {
+            command: "beginPath"
+        }, {
+            command: "moveTo",
+            param: [0, -80]
+        }, {
+            command: "lineTo",
+            param: [0, -92]
+        }, {
+            command: 'stroke'
+        }, {
+            command: 'restore'
+        }]);
+    }
+    //画分钟刻度
+    for (var i = 0; i < 60; i++) {
+        CanvasCommand.execute([{
+            command: "save"
+        }, {
+            command: "translate",
+            param: [250, 250]
+        }, {
+            command: "rotate",
+            param: [6 * i * Math.PI / 180]
+        }, {
+            command: "lineWidth",
+            param: '2'
+        }, {
+            command: "beginPath"
+        }, {
+            command: "moveTo",
+            param: [0, -86]
+        }, {
+            command: "lineTo",
+            param: [0, -92]
+        }, {
+            command: 'stroke'
+        }, {
+            command: 'restore'
+        }]);
+    }
+    //画时钟
+    //
+    CanvasCommand.execute([{
+        command: "save"
+    }, {
+        command: "translate",
+        param: [250, 250]
+    }, {
+        command: "rotate",
+        param: [h * 30 * Math.PI / 180]
+    }, {
+        command: "lineWidth",
+        param: '5'
+    }, {
+        command: "beginPath"
+    }, {
+        command: "moveTo",
+        param: [0, 6]
+    }, {
+        command: "lineTo",
+        param: [0, -40]
+    }, {
+        command: 'stroke'
+    }, {
+        command: 'restore'
+    }]);
+
+    //画分钟
+     CanvasCommand.execute([{
+        command: "save"
+    }, {
+        command: "translate",
+        param: [250, 250]
+    }, {
+        command: "rotate",
+        param: [m * 6 * Math.PI / 180]
+    }, {
+        command: "lineWidth",
+        param: '3'
+    }, {
+        command: "beginPath"
+    }, {
+        command: "moveTo",
+        param: [0, 8]
+    }, {
+        command: "lineTo",
+        param: [0, -60]
+    }, {
+        command: 'stroke'
+    }, {
+        command: 'restore'
+    }]);
+     //画秒钟
+       CanvasCommand.execute([{
+        command: "save"
+    }, {
+        command: "translate",
+        param: [250, 250]
+    }, {
+        command: "rotate",
+        param: [s * 6 * Math.PI / 180]
+    }, {
+        command: "lineWidth",
+        param: '1'
+    }, {
+        command: "beginPath"
+    }, {
+        command: "moveTo",
+        param: [0, 10]
+    }, {
+        command: "lineTo",
+        param: [0, -75]
+    }, {
+        command: 'stroke'
+    }, {
+        command: 'restore'
+    }]);
+        // // 画中心的小圆固定三根针
+ // cxt.save();
+ // cxt.beginPath();
+ // cxt.fillStyle = '#0f0';
+ // cxt.lineWidth = 2;
+ // cxt.translate(250,250);
+ // cxt.arc(0,0,2,0,360,false);
+ // cxt.stroke();
+ // cxt.fill();
+ // cxt.restore();
+     CanvasCommand.execute([{
+        command: "save"
+    }, 
+     {
+        command: "beginPath"
+    },
+    {
+    	command:'fillStyle',
+    	param:'#0f0'
+    },
+     {
+    	command:'lineWidth',
+    	param:'2'
+    },
+    {
+        command: "translate",
+        param: [250, 250]
+    }, {
+        command: "arc",
+        param: [0,0,2,0,360,false]
+    },
+   {
+        command: 'stroke'
+    }, 
+    {
+        command: 'fill'
+    },{
+        command: 'restore'
+    }]);
+     // // 画秒针上的园
+ // cxt.save();
+ // cxt.fillStyle = '#f00';
+ // cxt.lineWidth = 2;
+ // cxt.translate(250,250);
+ // cxt.rotate(s*6*Math.PI/180);
+ // cxt.beginPath();
+ // cxt.arc(0,-60,2,0,360,false);
+ // cxt.stroke();
+ // cxt.fill();
+ // cxt.restore();
+ 	  CanvasCommand.execute([{
+        command: "save"
+    }, 
+     {
+        command: "beginPath"
+    },
+    {
+    	command:'fillStyle',
+    	param:'#f00'
+    },
+     {
+    	command:'lineWidth',
+    	param:'2'
+    },
+    {
+        command: "translate",
+        param: [250, 250]
+    }, 
+    {
+    	command:"rotate",
+    	param:[s*6*Math.PI/180]
+    },{
+        command: "arc",
+        param: [0,-60,2,0,360,false]
+    },
+   {
+        command: 'stroke'
+    }, 
+    {
+        command: 'fill'
+    },{
+        command: 'restore'
+    }]);
+}
+clock();
+var  timer = setInterval(clock,1000);
 </script>
+
 </html>

@@ -37,6 +37,21 @@
                 },
                 stroke:function(){
                     ctx.stroke();
+                },
+                save:function(){
+                    ctx.save();
+                },
+                restore:function(){
+                    ctx.restore();
+                },
+                translate:function(x,y){
+                    ctx.translate(x,y);
+                },
+                rotate:function(x){
+                    ctx.rotate(x);
+                },
+                clearRect:function(x,y,width,height){
+                    ctx.clearRect(x,y,width,height);
                 }
             }
             return {
